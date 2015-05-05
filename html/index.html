@@ -19,9 +19,9 @@
 
     <div data-role="content">
       <label for="search-basic">Search Input:</label>
-      <input type="search" name="search" id="search-basic" value=""/>
+      <input type="search" name="search" id="search-basic" value="">
 
-      <button id="search-button">Search</button>
+      <button id="search-button" onclick="grabSearchValue()">Search</button>
 
     </div> <!-- /content -->
 
@@ -53,7 +53,7 @@
       <h1>Lecturers list</h1>
     </div><!-- /header -->
 
-    <div data-role="content">
+    <div data-role="content" id="list">
       <ul data-role="listview" data-filter="true" data-filter-placeholder="Find Lecturer" id="lecturer-results"></ul>
     </div><!-- /content -->
 

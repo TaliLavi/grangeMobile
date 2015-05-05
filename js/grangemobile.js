@@ -25,19 +25,25 @@ function getLecturers() {
 function createLecturersList(lecturers) {
     var html = "";
     $.each(lecturers, function(index, lecturer) {
-        html += '<li onclick="showLecturer(' + lecturer.staffNumber +')" class="ui-btn">'
+        html += '<li onclick="showLecturer(' + index +')" class="ui-btn">'
              + lecturer.firstName + ' ' + lecturer.lastName + '</li>';
     });
     return html;
 }
 
-function showLecturer(staffNumber) {
-
-    alert("lecturer: " + staffNumber)
+//prepare lecturer's details page and switch to it
+function showLecturer(index) {
+    var lecturer = getLecturers()[index];
+    $("#lecturerName").html(lecturer.firstName + " " + lecturer.lastName);
+    $("body").pagecontainer("change", "#viewLecturerDetails");
 }
 
-
-
+//grabs user's search value and injects it to the filter (input) element on the list page
+function grabSearchValue() {
+    var query = $("#search-basic").val();
+    $("body").pagecontainer("change", "#lecturersPage");
+    $("#list input").attr("value", query).trigger("keyup");
+}
 
 
 

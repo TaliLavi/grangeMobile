@@ -1,13 +1,15 @@
 //object containing several global variables
 var globalStorage = {
     lecturers: null,
-    selectedLecturer: null
-};
+    modules: null
+}
 
-//inject lecturers' first and last name into list items on lecturersPage
+//create DOM elements for lecturersPage and modulesPage
 $(document).on("pagebeforecreate", function(){
     var lecturerHtml = createLecturersList(getLecturers());
     $('#lecturer-results').html(lecturerHtml);
+    var moduleHtml = createModulesList(getModules());
+    $('#module-results').html(moduleHtml);
 } )
 
 //if global var is null, cache it with lecturers data
@@ -21,12 +23,33 @@ function getLecturers() {
     return globalStorage.lecturers
 }
 
+//if global var is null, cache it with modules data
+function getModules() {
+    if (globalStorage.modules === null) {
+        //making a synchronous request because we need the data for page load
+        globalStorage.modules  = $.parseJSON(
+            $.ajax({url: '../php/json-data-modules.php', async: false, dataType: 'json'}
+            ).responseText).modules;
+    }
+    return globalStorage.modules
+}
+
 //return HTML for lecturers' list
 function createLecturersList(lecturers) {
     var html = "";
     $.each(lecturers, function(index, lecturer) {
         html += '<li onclick="showLecturer(' + index +')" class="ui-btn">'
              + lecturer.firstName + ' ' + lecturer.lastName + '</li>';
+    });
+    return html;
+}
+
+//return HTML for modules' list
+function createModulesList(modules) {
+    var html = "";
+    $.each(modules, function(index, module) {
+        html += '<li onclick="showModule(' + index +')" class="ui-btn">'
+            + module.moduleName + '</li>';
     });
     return html;
 }
@@ -38,11 +61,19 @@ function showLecturer(index) {
     $("body").pagecontainer("change", "#viewLecturerDetails");
 }
 
+
+//prepare module's details page and switch to it
+function showModule(index) {
+    var module = getModules()[index];
+    $("#moduleName").html(module.moduleName);
+    $("body").pagecontainer("change", "#viewModuleDetails");
+}
+
 //grabs user's search value and injects it to the filter (input) element on the list page
 function grabSearchValue() {
     var query = $("#search-basic").val();
     $("body").pagecontainer("change", "#lecturersPage");
-    $("#list input").attr("value", query).trigger("keyup");
+    $("#lecturesList input").attr("value", query).trigger("keyup");
 }
 
 

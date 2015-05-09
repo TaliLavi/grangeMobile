@@ -1,44 +1,27 @@
 //object containing several global variables
 var globalStorage = {
-    lecturers: null,
-    modules: null
+    lecturers: [],
+    modules: []
 }
 
 //create DOM elements for lecturersPage and modulesPage
 $(document).on("pagebeforecreate", function(){
-    var lecturerHtml = createLecturersList(getLecturers());
-    $('#lecturer-results').html(lecturerHtml);
-    var moduleHtml = createModulesList(getModules());
-    $('#module-results').html(moduleHtml);
+    // fetch and save data for the lecturers and modules
+    $.getJSON('../php/json-data-lecturers.php', function(data){
+        $('#lecturer-results').html(createLecturersList(data.lecturers));
+        globalStorage.lecturers = data.lecturers;
+    });
+    $.getJSON('../php/json-data-modules.php', function(data){
+        $('#module-results').html(createModulesList(data.modules));
+        globalStorage.modules = data.modules;
+    });
 } )
-
-//if global var is null, cache it with lecturers data
-function getLecturers() {
-    if (globalStorage.lecturers === null) {
-        //making a synchronous request because we need the data for page load
-        globalStorage.lecturers  = $.parseJSON(
-            $.ajax({url: '../php/json-data-lecturers.php', async: false, dataType: 'json'}
-            ).responseText).lecturers;
-    }
-    return globalStorage.lecturers
-}
-
-//if global var is null, cache it with modules data
-function getModules() {
-    if (globalStorage.modules === null) {
-        //making a synchronous request because we need the data for page load
-        globalStorage.modules  = $.parseJSON(
-            $.ajax({url: '../php/json-data-modules.php', async: false, dataType: 'json'}
-            ).responseText).modules;
-    }
-    return globalStorage.modules
-}
 
 //return HTML for lecturers' list
 function createLecturersList(lecturers) {
     var html = "";
     $.each(lecturers, function(index, lecturer) {
-        html += '<li onclick="showLecturer(' + index +')" class="ui-btn">'
+        html += '<li onclick="showLecturer(' + index +')" class="ui-li-static ui-body-inherit ui-btn">'
              + lecturer.firstName + ' ' + lecturer.lastName + '</li>';
     });
     return html;
@@ -48,7 +31,7 @@ function createLecturersList(lecturers) {
 function createModulesList(modules) {
     var html = "";
     $.each(modules, function(index, module) {
-        html += '<li onclick="showModule(' + index +')" class="ui-btn">'
+        html += '<li onclick="showModule(' + index +')" class="ui-li-static ui-body-inherit ui-btn">'
             + module.moduleName + '</li>';
     });
     return html;
@@ -56,15 +39,14 @@ function createModulesList(modules) {
 
 //prepare lecturer's details page and switch to it
 function showLecturer(index) {
-    var lecturer = getLecturers()[index];
+    var lecturer = globalStorage.lecturers[index];
     $("#lecturerName").html(lecturer.firstName + " " + lecturer.lastName);
     $("body").pagecontainer("change", "#viewLecturerDetails");
 }
 
-
 //prepare module's details page and switch to it
 function showModule(index) {
-    var module = getModules()[index];
+    var module = globalStorage.modules[index];
     $("#moduleName").html(module.moduleName);
     $("body").pagecontainer("change", "#viewModuleDetails");
 }

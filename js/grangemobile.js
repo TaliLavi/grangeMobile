@@ -47,7 +47,30 @@ function showLecturer(index) {
 //prepare module's details page and switch to it
 function showModule(index) {
     var module = globalStorage.modules[index];
+
+    //find module's lecturer based on module's number and display it
+    var lecturer = null;
+    $.each(globalStorage.lecturers, function(i, l) {
+        if (l.moduleNo1 === module.moduleNo || l.moduleNo2 === module.moduleNo) {
+            lecturer = l;
+            lecturerIndex = i;
+        }
+    });
+
+    if (lecturer === null){
+        //just in case the module doesn't have a lecturer listed in the DB
+        $("#moduleLecturer").html("Lecturer: Unknown");
+    }else {
+        $("#moduleLecturer").html('Lecturer: <a href="" onclick="showLecturer(' + lecturerIndex + ')">' + lecturer.firstName + ' ' + lecturer.lastName + '</a>');
+    }
+
+
     $("#moduleName").html(module.moduleName);
+    $("#moduleRoom").html("Room: " + module.room);
+    $("#moduleLocation").html("Location: " + module.location);
+    $("#moduleNumber").html("Module number: " + module.moduleNo);
+    $("#moduleCredits").html("Credits: " + module.credits);
+    $("#moduleWebsite").html('Website: <a href="http://' + module.website + '">' + module.website + '</a>');
     $("body").pagecontainer("change", "#viewModuleDetails");
 }
 

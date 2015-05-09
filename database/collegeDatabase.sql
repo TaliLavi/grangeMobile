@@ -22,7 +22,7 @@ use `collegeData`;
 CREATE TABLE `lecturerTable` (
   `staffNumber` int(6) NOT NULL,
   `firstName` varchar(10) NOT NULL,
-  `lastName` varchar(15) NOT NULL,
+  `lastNamelastName` varchar(15) NOT NULL,
   `moduleNo1` int(6) NOT NULL,
   `moduleNo2` int(6) NOT NULL,
   `email` varchar(30) NOT NULL,

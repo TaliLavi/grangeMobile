@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.css"/>
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
+  <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
   <script src="../js/grangemobile.js"></script>
 </head>
 
@@ -103,34 +104,33 @@
     </div><!-- /header -->
 
     <div data-role="content">
-
+      <div id="map" style="height: 400px;"></div>
       <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
             <div data-role="collapsible">
-                <h3>Add to favorites</h3>
-            <p>I'm the collapsible content for section 3</p>
+              <h3>Add to favorites</h3>
+              <p>Add me</p>
             </div>
             <div data-role="collapsible">
-                <h3>Module details</h3>
-            <p>
-              <p id="moduleLecturer"></p>
-              <p id="moduleRoom"></p>
-              <p id="moduleLocation"></p>
-              <p id="moduleNumber"></p>
-              <p id="moduleCredits"></p>
-              <p id="moduleWebsite"></p>
-            </p>
+              <h3>Module details</h3>
+              <p>
+                <p id="moduleLecturer"></p>
+                <p id="moduleRoom"></p>
+                <p id="moduleLocation"></p>
+                <p id="moduleNumber"></p>
+                <p id="moduleCredits"></p>
+                <p id="moduleWebsite"></p>
+              </p>
             </div>
             <div data-role="collapsible">
-                <h3>View location</h3>
-            <p>I'm the collapsible content for section 3</p>
+              <h3>View location</h3>
             </div>
             <div data-role="collapsible">
-              <h3>Latest tweets</h3>
-            <p>I'm the collapsible content for section 3</p>
+              <h3>Latest tweets</h3>
+              <p>Tweets</p>
             </div>
             <div data-role="collapsible">
-                <h3>Students listed</h3>
-            <p>I'm the collapsible content for section 3</p>
+              <h3>Listed students</h3>
+              <p id="allListedStudents">All listed students</p>
             </div>
       </div>
 

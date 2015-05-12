@@ -78,13 +78,30 @@ function createStudentsList(students) {
     return html;
 }
 
+function lookupModule(moduleNum) {
+    var matchingModules = globals.modules.filter(function(m){
+        return m.moduleNo === String(moduleNum)
+    });
+    if (matchingModules.length == 0) {
+        return null
+    } else {
+        return matchingModules[0]
+    }
+}
 
 //prepare lecturer's details page and switch to it
 function showLecturer(index) {
     var lecturer = globals.lecturers[index];
     $("#lecturerName").html(lecturer.firstName + " " + lecturer.lastName);
+    $("#staffNumber").html("Staff number: " + lecturer.staffNumber);
+    $("#email").html("email: " + lecturer.email);
+    $("#module01").html(lookupModule(lecturer.moduleNo1).moduleName);
+    $("#module02").html(lookupModule(lecturer.moduleNo2).moduleName);
+
     $("body").pagecontainer("change", "#viewLecturerDetails");
+
 }
+
 
 function prepareMap(lat, long, moduleName){
     var location = new google.maps.LatLng(lat, long);

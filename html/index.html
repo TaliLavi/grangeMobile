@@ -4,7 +4,10 @@
   <title>Final Assignment - Tali Lavi</title>
   <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" href="../themes/DITblue.min.css" />-->
+  <!--<link rel="stylesheet" href="../themes/jquery.mobile.icons.min.css" />-->
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.css"/>
+  <link rel="stylesheet" href="../css/grangeMobile.css"/>
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
   <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -14,20 +17,22 @@
 <body>
   <div data-role="page" id="search-page">
     <div data-role="header">
-      <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+      <a href="#nav-panel1" data-icon="bars" data-iconpos="notext">Menu</a>
       <h1>grangeMobile</h1>
     </div> <!-- /header -->
 
     <div data-role="content">
-      <label for="search-basic">Search Input:</label>
-      <input type="search" name="search" id="search-basic" value="">
+      <img id="DIT" src="../assets/dit_logo.png" align="middle">
+      <label for="search-basic"></label>
+      <input type="search" name="search" id="search-basic" value="" placeholder="Search for a module or a lecturer...">
 
       <button id="search-button" onclick="mainSearch()">Search</button>
       <div id="searchErrorMessage"></div>
 
+
     </div> <!-- /content -->
 
-    <div data-role="panel" id="nav-panel" data-display="overlay" data-theme="a">
+    <div data-role="panel" id="nav-panel1" data-display="overlay" data-theme="a">
       <ul data-role="listview" class="nav-search">
         <li>
           <a href="#search-page" data-rel="close">Search</a>
@@ -44,14 +49,12 @@
       </ul>
     </div> <!-- /panel -->
 
-    <div data-role="footer">
-      <h4>Page Footer</h4>
-    </div> <!-- /footer -->
   </div> <!-- /page -->
 
   <div data-role="page" id="lecturersPage">
 
     <div data-role="header">
+      <a href="#nav-panel2" data-icon="bars" data-iconpos="notext">Menu</a>
       <h1>Lecturers list</h1>
     </div><!-- /header -->
 
@@ -61,29 +64,66 @@
       </ul>
     </div><!-- /content -->
 
-    <div data-role="footer">
-      <h4>Page Footer</h4>
-    </div><!-- /footer -->
+    <div data-role="panel" id="nav-panel2" data-display="overlay" data-theme="a">
+      <ul data-role="listview" class="nav-search">
+        <li>
+          <a href="#search-page" data-rel="close">Search</a>
+        </li>
+        <li>
+          <a href="#modulesPage">List Modules</a>
+        </li>
+        <li>
+          <a href="#lecturersPage">List Lecturers</a>
+        </li>
+        <li>
+          <a href="#favoritesPage">My Modules</a>
+        </li>
+      </ul>
+    </div> <!-- /panel -->
+
   </div><!-- /page -->
 
   <div data-role="page" id="viewLecturerDetails">
 
     <div data-role="header">
+      <a href="#nav-panel3" data-icon="bars" data-iconpos="notext">Menu</a>
       <h1 id="lecturerName">Lecturer Name</h1>
     </div><!-- /header -->
 
     <div data-role="content">
-      <p>Hi There</p>
+      <div id="staffNumber"></div>
+      <div id="email"></div>
+      <div>Teaches:
+        <ul>
+          <li id="module01"></li>
+          <li id="module02"></li>
+        </ul>
+      </div>
     </div><!-- /content -->
 
-    <div data-role="footer">
-      <h4>Page Footer</h4>
-    </div><!-- /footer -->
+    <div data-role="panel" id="nav-panel3" data-display="overlay" data-theme="a">
+      <ul data-role="listview" class="nav-search">
+        <li>
+          <a href="#search-page" data-rel="close">Search</a>
+        </li>
+        <li>
+          <a href="#modulesPage">List Modules</a>
+        </li>
+        <li>
+          <a href="#lecturersPage">List Lecturers</a>
+        </li>
+        <li>
+          <a href="#favoritesPage">My Modules</a>
+        </li>
+      </ul>
+    </div> <!-- /panel -->
+
   </div><!-- /page -->
 
   <div data-role="page" id="modulesPage">
 
     <div data-role="header">
+      <a href="#nav-panel4" data-icon="bars" data-iconpos="notext">Menu</a>
       <h1>Modules list</h1>
     </div><!-- /header -->
 
@@ -93,14 +133,29 @@
       </ul>
     </div><!-- /content -->
 
-    <div data-role="footer">
-      <h4>Page Footer</h4>
-    </div><!-- /footer -->
+    <div data-role="panel" id="nav-panel4" data-display="overlay" data-theme="a">
+      <ul data-role="listview" class="nav-search">
+        <li>
+          <a href="#search-page" data-rel="close">Search</a>
+        </li>
+        <li>
+          <a href="#modulesPage">List Modules</a>
+        </li>
+        <li>
+          <a href="#lecturersPage">List Lecturers</a>
+        </li>
+        <li>
+          <a href="#favoritesPage">My Modules</a>
+        </li>
+      </ul>
+    </div> <!-- /panel -->
+
   </div><!-- /page -->
 
   <div data-role="page" id="viewModuleDetails">
 
     <div data-role="header">
+      <a href="#nav-panel5" data-icon="bars" data-iconpos="notext">Menu</a>
       <h1 id="moduleName">Module Name</h1>
     </div><!-- /header -->
 
@@ -119,7 +174,6 @@
         <p id="moduleNumber"></p>
         <p id="moduleCredits"></p>
         <p id="moduleWebsite"></p>
-        </p>
       </div>
       <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
             <div data-role="collapsible">
@@ -131,14 +185,29 @@
 
     </div><!-- /content -->
 
-    <div data-role="footer">
-      <h4>Page Footer</h4>
-    </div><!-- /footer -->
+    <div data-role="panel" id="nav-panel5" data-display="overlay" data-theme="a">
+      <ul data-role="listview" class="nav-search">
+        <li>
+          <a href="#search-page" data-rel="close">Search</a>
+        </li>
+        <li>
+          <a href="#modulesPage">List Modules</a>
+        </li>
+        <li>
+          <a href="#lecturersPage">List Lecturers</a>
+        </li>
+        <li>
+          <a href="#favoritesPage">My Modules</a>
+        </li>
+      </ul>
+    </div> <!-- /panel -->
+
   </div><!-- /page -->
 
   <div data-role="page" id="favoritesPage">
 
     <div data-role="header">
+      <a href="#nav-panel6" data-icon="bars" data-iconpos="notext">Menu</a>
       <h1>My Modules</h1>
     </div><!-- /header -->
 
@@ -148,9 +217,23 @@
       </ul>
     </div><!-- /content -->
 
-    <div data-role="footer">
-      <h4>Page Footer</h4>
-    </div><!-- /footer -->
+    <div data-role="panel" id="nav-panel6" data-display="overlay" data-theme="a">
+      <ul data-role="listview" class="nav-search">
+        <li>
+          <a href="#search-page" data-rel="close">Search</a>
+        </li>
+        <li>
+          <a href="#modulesPage">List Modules</a>
+        </li>
+        <li>
+          <a href="#lecturersPage">List Lecturers</a>
+        </li>
+        <li>
+          <a href="#favoritesPage">My Modules</a>
+        </li>
+      </ul>
+    </div> <!-- /panel -->
+
   </div><!-- /page -->
 
 </body>

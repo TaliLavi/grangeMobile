@@ -1,7 +1,6 @@
 //object containing several global variables
 var globals = {
     lecturers: [],
-    selectedLecturer: null,
     modules: [],
     selectedModule: null,
     students: [],
@@ -10,7 +9,7 @@ var globals = {
 }
 
 //create DOM elements for lecturersPage and modulesPage
-$(document).on( "pagebeforecreate", "#search-page", function(){
+$(document).on("pagebeforecreate", "#searchPage", function(){
     // fetch and save data for the lecturers and modules
     $.getJSON('../php/json-data-lecturers.php', function(data){
         $('#lecturer-results').html(createLecturersList(data.lecturers));
@@ -27,7 +26,6 @@ $(document).on( "pagebeforecreate", "#search-page", function(){
         globals.students = data.students;
     });
 } )
-
 
 $(document).on("pagecontainertransition", function(event, ui) {
     // recenter map, after each transition
@@ -57,17 +55,6 @@ function createModulesList(modules) {
     });
     return html;
 }
-
-//return HTML for favorite modules' list
-function createFavoritesList() {
-    var html = "";
-    $.each(loadFavorites(), function(index) {
-        html += '<li onclick="showModule(' + index +')" class="ui-li-static ui-body-inherit ui-btn">'
-             + globals.modules[index].moduleName + '</li>';
-    });
-    return html;
-}
-
 
 //return HTML for students' list on module's page
 function createStudentsList(students) {
@@ -148,11 +135,32 @@ function showModule(index) {
     $("#moduleWebsite").html('Website: <a href="http://' + module.website + '">' + module.website + '</a>');
     $('#allListedStudents').html(createStudentsList(globals.students));
 
+    if (loadFavorites().indexOf(index) > -1) { // if it's in the favorites, light up the toggle button (checkbox)
+        $(".ui-checkbox input").prop("checked", true);
+        $("#favorite-label").removeClass("ui-checkbox-off").addClass("ui-checkbox-on").addClass("ui-btn-active");
+    } else {
+        $(".ui-checkbox input").prop("checked", false);
+        $("#favorite-label").addClass("ui-checkbox-off").removeClass("ui-checkbox-on").removeClass("ui-btn-active")
+    }
+
     $("body").pagecontainer("change", "#viewModuleDetails");
     var map = prepareMap(module.lat, module.long, module.moduleName);
 }
 
 // ===Favorites handling functions===
+//return HTML for favorite modules' list
+function createFavoritesList() {
+    if (globals.modules.length == 0) { // we can do nothing if modules weren't loaded yet
+        return;
+    }
+    var html = "";
+    $.each(loadFavorites(), function(i, favoritesIndex) {
+        html += '<li onclick="showModule(' + favoritesIndex +')" class="ui-li-static ui-body-inherit ui-btn">'
+            + globals.modules[favoritesIndex].moduleName + '</li>';
+    });
+    return html;
+}
+
 function saveFavorites(favoritesArray) {
         localStorage.favorites = JSON.stringify(favoritesArray);
 }
@@ -179,12 +187,14 @@ function addFavorite(id) {
 }
 
 function toggleFavorite() {
-    var favorited = $("#favorite-label").hasClass("ui-checkbox-on");
-    if (favorited) {
+    if ($(".ui-checkbox input").prop("checked")) {
         addFavorite(globals.selectedModule);
     } else {
         removeFavorite(globals.selectedModule);
     }
+
+    // recreate the favorites page
+    $("#favoritesList").html(createFavoritesList());
 }
 
 
